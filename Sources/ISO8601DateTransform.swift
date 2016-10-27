@@ -30,11 +30,11 @@ import Foundation
 
 open class ISO8601DateTransform: DateFormatterTransform {
 
+	
 	public init() {
 		let formatter = DateFormatter()
 		formatter.locale = Locale(identifier: "en_US_POSIX")
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-		
 		super.init(dateFormatter: formatter)
 	}
     
@@ -42,18 +42,12 @@ open class ISO8601DateTransform: DateFormatterTransform {
         guard let value = value as? String else {
             return nil
         }
-        let actualFormat = formatFrom(value)        
+		
+		let actualFormat = formatFrom(value)
         dateFormatter.dateFormat = actualFormat.dateFormat
-        return super.transformFromJSON(value)
+        return super.transformFromJSON(actualFormat.dateString)
     }
 	
-	open override func transformToJSON(_ value: Date?) -> String? {
-		if let date = value {
-			dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-			return dateFormatter.string(from: date)
-		}
-		return nil
-	}
 	
     /// get the current date string and try to find a valid format string for that string and returns the a valid format and a valid date to set them into a DateFormatter  
     func formatFrom(_ value:String) -> (dateString:String?, dateFormat:String?) {

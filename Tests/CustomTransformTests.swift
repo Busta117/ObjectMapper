@@ -90,17 +90,13 @@ class CustomTransformTests: XCTestCase {
 		let transforms = Transforms()
 		
 		transforms.ISO8601Date = Date(timeIntervalSince1970: 1398956159)
-		let JSON1 = mapper.toJSON(transforms)
-		
-		
-//		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-//		transforms.ISO8601Date = formatter.date(from: "2016-10-24T10:20:30.349-0500")!
+		let JSONpre = mapper.toJSON(transforms)
 
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-		transforms.ISO8601DateOpt = formatter.date(from: "2016-10-24T10:20:30Z")
+		transforms.ISO8601DateOpt = formatter.date(from: "2016-10-24T10:20:30")
 		
-		let JSON = ["ISO8601Date" : JSON1["ISO8601Date"],
-		            "ISO8601DateOpt" : "2016-10-24T10:20:30Z"]
+		let JSON = ["ISO8601Date" : JSONpre["ISO8601Date"],
+		            "ISO8601DateOpt" : "2016-10-24T10:20:30"]
 		let parsedTransforms = mapper.map(JSON: JSON)
 		
 		XCTAssertNotNil(parsedTransforms)

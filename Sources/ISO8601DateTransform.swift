@@ -48,6 +48,13 @@ open class ISO8601DateTransform: DateFormatterTransform {
         return super.transformFromJSON(actualFormat.dateString)
     }
 	
+	override open func transformToJSON(_ value: Date?) -> String? {
+		if let date = value {
+			dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+			return dateFormatter.string(from: date)
+		}
+		return nil
+	}
 	
     /// get the current date string and try to find a valid format string for that string and returns the a valid format and a valid date to set them into a DateFormatter  
     func formatFrom(_ value:String) -> (dateString:String?, dateFormat:String?) {
